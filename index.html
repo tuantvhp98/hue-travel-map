@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bản đồ các điểm du lịch Huế</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="header">
+        <h1>🏛️ Bản đồ các điểm du lịch Huế</h1>
+        <p>Khám phá các địa điểm ẩm thực và di tích lịch sử nổi tiếng tại Huế</p>
+    </div>
+    
+    <div id="sidebar">
+        <div class="sidebar-content">
+            <h3>📍 Danh sách địa điểm</h3>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Tất cả</button>
+                <button class="filter-btn" data-filter="food">Ẩm thực</button>
+                <button class="filter-btn" data-filter="historical">Di tích</button>
+                <button class="filter-btn" data-filter="attraction">Điểm tham quan</button>
+            </div>
+            <div id="locations-list"></div>
+        </div>
+    </div>
+
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+
+    <!-- Popup template -->
+    <div id="popup-template" style="display: none;">
+        <div class="popup-content">
+            <h3 class="popup-title"></h3>
+            <p class="popup-address"></p>
+            <div class="popup-actions">
+                <button class="btn-directions" onclick="getDirections(event)">Chỉ đường</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="map.js"></script>
+</body>
+</html>
