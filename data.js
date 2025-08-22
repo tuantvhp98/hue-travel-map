@@ -207,6 +207,78 @@ const locations = [
         coordinates: [107.5824849789531, 16.477009549208105],
         type: "food",
         icon: "🍮"
+    },
+    {
+        name: "Chùa Thiên Mụ",
+        address: "Huyện Hương Thủy, Thành phố Huế, Việt Nam",
+        englishName: "Thien Mu Pagoda",
+        coordinates: [107.55644, 16.45583],
+        type: "historical",
+        icon: "🏯"
+    },
+    {
+        name: "Cầu Trường Tiền",
+        address: "Cầu Trường Tiền, Huế, Thành phố Huế, Việt Nam",
+        englishName: "Trang Tien Bridge",
+        coordinates: [107.59234, 16.46511],
+        type: "attraction",
+        icon: "🌉"
+    },
+    {
+        name: "Bún Bò Huế Hồng Mai",
+        address: "Trần Cao Vân, Phú Hội, Huế, Thành phố Huế, Việt Nam",
+        englishName: "Hong Mai Bun Bo Hue",
+        coordinates: [107.59164, 16.46569],
+        type: "food",
+        icon: "🍜"
+    },
+    {
+        name: "Đồi Vọng Cảnh",
+        address: "Hương Thủy, Thành phố Huế, Việt Nam",
+        englishName: "Vong Canh Hill",
+        coordinates: [107.56789, 16.43456],
+        type: "attraction",
+        icon: "⛰️"
+    },
+    {
+        name: "Bến Xưa Vĩ Dạ",
+        address: "Vĩ Dạ, Huế, Thành phố Huế, Việt Nam",
+        englishName: "Vi Da Old Wharf",
+        coordinates: [107.59549, 16.47455],
+        type: "historical",
+        icon: "⚓"
+    },
+    {
+        name: "Trường Quốc Học Huế",
+        address: "12 Lê Lợi, Phú Hội, Huế, Thành phố Huế, Việt Nam",
+        englishName: "Quoc Hoc High School",
+        coordinates: [107.59164, 16.46379],
+        type: "historical",
+        icon: "🏫"
+    },
+    {
+        name: "Cầu Gỗ Lim",
+        address: "Thanh Toàn, Hương Thủy, Thành phố Huế, Việt Nam",
+        englishName: "Thanh Toan Covered Bridge",
+        coordinates: [107.62345, 16.43456],
+        type: "attraction",
+        icon: "🌉"
+    },
+    {
+        name: "Bún Thịt Nướng Huế",
+        address: "48 Trần Cao Vân, Phú Hội, Huế, Thành phố Huế, Việt Nam",
+        englishName: "Hue Grilled Pork Noodles",
+        coordinates: [107.59134, 16.46589],
+        type: "food",
+        icon: "🍜"
+    },
+    {
+        name: "Bánh Bèo Bánh Nậm Cô Ba",
+        address: "11 Lý Thường Kiệt, Phú Hội, Huế, Thành phố Huế, Việt Nam",
+        englishName: "Co Ba Banh Beo Banh Nam",
+        coordinates: [107.58934, 16.46449],
+        type: "food",
+        icon: "🥟"
     }
 ];
 
@@ -216,4 +288,140 @@ const locationTypes = {
     food: "Ẩm thực",
     historical: "Di tích",
     attraction: "Điểm tham quan"
+};
+
+// Lịch trình 3 ngày 2 đêm tại Huế
+const itinerary = {
+    day1: {
+        title: "Ngày 1: Đại Nội – Chùa Thiên Mụ – Sông Hương",
+        description: "Khám phá trung tâm di sản văn hóa thế giới và thưởng thức ẩm thực địa phương",
+        locations: [
+            {
+                time: "08:00",
+                location: "Bún Bò Huế Hồng Mai",
+                duration: "30 phút",
+                note: "Ăn sáng bún bò Huế authentic trước khi tham quan"
+            },
+            {
+                time: "08:30",
+                location: "Hoàng Thành Huế",
+                duration: "3 giờ",
+                note: "Tham quan Đại Nội (Kinh thành Huế) - khu rộng lớn, chụp ảnh tốn ~3h"
+            },
+            {
+                time: "11:30",
+                location: "Cơm Hến Đập Đá 01 Hàn Mặc Tử",
+                duration: "1 giờ",
+                note: "Ăn trưa cơm hến đặc sản Huế"
+            },
+            {
+                time: "15:00",
+                location: "Chùa Thiên Mụ",
+                duration: "2 giờ",
+                note: "Tham quan chùa cổ, ngắm cảnh và chụp ảnh hoàng hôn siêu đẹp"
+            },
+            {
+                time: "17:00",
+                location: "Cầu Trường Tiền",
+                duration: "1 giờ",
+                note: "Dạo sông Hương và cầu Trường Tiền, ngắm cảnh hoàng hôn"
+            },
+            {
+                time: "19:00",
+                location: "Bún Thịt Nướng Huế",
+                duration: "1 giờ",
+                note: "Ăn tối bún thịt nướng đặc sản"
+            },
+            {
+                time: "20:00",
+                location: "Bánh Bèo Bánh Nậm Cô Ba",
+                duration: "45 phút",
+                note: "Thưởng thức bánh bèo, bánh nậm và dạo phố Tây"
+            }
+        ]
+    },
+    day2: {
+        title: "Ngày 2: Lăng tẩm – Cung An Định – Đồi Vọng Cảnh",
+        description: "Khám phá kiến trúc hoàng gia và ngắm cảnh sông Hương từ trên cao",
+        locations: [
+            {
+                time: "07:30",
+                location: "Bánh Canh Cá Lóc Sen Xù",
+                duration: "45 phút",
+                note: "Ăn sáng bánh canh Huế"
+            },
+            {
+                time: "08:00",
+                location: "Lăng Khải Định",
+                duration: "3 giờ",
+                note: "Tham quan lăng có kiến trúc độc đáo Đông Tây kết hợp, chụp ảnh đẹp"
+            },
+            {
+                time: "13:30",
+                location: "Đồi Vọng Cảnh",
+                duration: "2 giờ",
+                note: "Ngắm sông Hương từ trên cao, view panorama tuyệt đẹp"
+            },
+            {
+                time: "16:00",
+                location: "Cung An Định",
+                duration: "1.5 giờ",
+                note: "Tham quan cung điện nhà Nguyễn, kiến trúc cổ điển"
+            },
+            {
+                time: "19:00",
+                location: "Chè Thanh 4.7 sao",
+                duration: "1 giờ",
+                note: "Ăn tối và trải nghiệm chè Huế đặc sắc"
+            },
+            {
+                time: "20:30",
+                location: "Cầu Trường Tiền",
+                duration: "1 giờ",
+                note: "Tự do dạo phố, ngắm cầu Trường Tiền về đêm lên đèn rất chill"
+            }
+        ]
+    },
+    day3: {
+        title: "Ngày 3: Thơ mộng xứ Huế – Bến Xưa – Trường Quốc Học",
+        description: "Khám phá những nét đẹp thơ mộng, văn hóa và lịch sử giáo dục Huế",
+        locations: [
+            {
+                time: "07:00",
+                location: "Cơm Hến Đập Đá 01 Hàn Mặc Tử",
+                duration: "45 phút",
+                note: "Ăn sáng cơm hến lần cuối"
+            },
+            {
+                time: "08:00",
+                location: "Bến Xưa Vĩ Dạ",
+                duration: "2 giờ",
+                note: "Tham quan bến xưa gắn với thơ Hàn Mặc Tử, không gian thơ mộng"
+            },
+            {
+                time: "10:30",
+                location: "Trường Quốc Học Huế",
+                duration: "1.5 giờ",
+                note: "Thăm trường cổ kính, nhiều góc chụp hình đẹp"
+            },
+            {
+                time: "14:00",
+                location: "Cầu Gỗ Lim",
+                duration: "1.5 giờ",
+                note: "Check-in cầu gỗ lim cổ kính, trải nghiệm làng quê"
+            },
+            {
+                time: "15:30",
+                location: "Trường Quốc Học Huế",
+                duration: "1.5 giờ",
+                note: "Quay lại khu trường, gần đó có bãi cỏ hồng chụp hoàng hôn rất đẹp"
+            },
+            {
+                time: "17:30",
+                location: "Chè mợ tôn đích",
+                duration: "1 giờ",
+                note: "Ăn uống nhẹ, thưởng thức chè truyền thống trước khi kết thúc hành trình"
+            }
+        ]
+    }
 };

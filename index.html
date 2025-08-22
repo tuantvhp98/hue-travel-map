@@ -16,14 +16,32 @@
     
     <div id="sidebar">
         <div class="sidebar-content">
-            <h3>📍 Danh sách địa điểm</h3>
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">Tất cả</button>
-                <button class="filter-btn" data-filter="food">Ẩm thực</button>
-                <button class="filter-btn" data-filter="historical">Di tích</button>
-                <button class="filter-btn" data-filter="attraction">Điểm tham quan</button>
+            <div class="tab-container">
+                <button class="tab-btn active" data-tab="locations">📍 Địa điểm</button>
+                <button class="tab-btn" data-tab="itinerary">🗓️ Lịch trình</button>
             </div>
-            <div id="locations-list"></div>
+            
+            <div id="locations-tab" class="tab-content active">
+                <h3>📍 Danh sách địa điểm</h3>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">Tất cả</button>
+                    <button class="filter-btn" data-filter="food">Ẩm thực</button>
+                    <button class="filter-btn" data-filter="historical">Di tích</button>
+                    <button class="filter-btn" data-filter="attraction">Điểm tham quan</button>
+                </div>
+                <div id="locations-list"></div>
+            </div>
+            
+            <div id="itinerary-tab" class="tab-content">
+                <h3>🗓️ Lịch trình 3 ngày 2 đêm</h3>
+                <div class="itinerary-buttons">
+                    <button class="itinerary-btn active" data-day="day1">Ngày 1</button>
+                    <button class="itinerary-btn" data-day="day2">Ngày 2</button>
+                    <button class="itinerary-btn" data-day="day3">Ngày 3</button>
+                    <button class="itinerary-btn" data-day="all-days">Tất cả</button>
+                </div>
+                <div id="itinerary-content"></div>
+            </div>
         </div>
     </div>
 

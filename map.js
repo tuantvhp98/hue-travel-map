@@ -6,6 +6,9 @@ class HueMap {
         this.currentFilter = 'all';
         this.activePopup = null;
         this.markersLayer = null;
+        this.routeLines = [];
+        this.currentDay = 'day1';
+        this.currentTab = 'locations';
         this.init();
     }
 
@@ -13,6 +16,7 @@ class HueMap {
         this.createMap();
         this.setupEventListeners();
         this.renderLocationsList();
+        this.renderItinerary();
         this.addMarkersToMap();
     }
 
@@ -239,6 +243,43 @@ class HueMap {
             });
         });
 
+        // Tab buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                e.target.classList.add('active');
+                const tabName = e.target.dataset.tab;
+                document.getElementById(`${tabName}-tab`).classList.add('active');
+                
+                this.currentTab = tabName;
+                
+                if (tabName === 'itinerary') {
+                    this.showItineraryRoute();
+                } else {
+                    this.clearRoutes();
+                    this.addMarkersToMap();
+                }
+            });
+        });
+
+        // Itinerary day buttons
+        document.querySelectorAll('.itinerary-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Remove active class from all buttons
+                document.querySelectorAll('.itinerary-btn').forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                e.target.classList.add('active');
+                
+                this.currentDay = e.target.dataset.day;
+                this.showItineraryRoute();
+                this.renderItineraryContent();
+            });
+        });
+
         // Đóng highlight khi click vào bản đồ
         this.map.on('click', (e) => {
             // Chỉ xóa highlight nếu không click vào marker
@@ -248,6 +289,175 @@ class HueMap {
                 });
             }
         });
+    }
+
+    renderItinerary() {
+        this.renderItineraryContent();
+    }
+
+    renderItineraryContent() {
+        const container = document.getElementById('itinerary-content');
+        if (!container) return;
+
+        let html = '';
+
+        if (this.currentDay === 'all-days') {
+            // Hiển thị tất cả các ngày
+            Object.keys(itinerary).forEach(dayKey => {
+                html += this.renderDayContent(dayKey, itinerary[dayKey]);
+            });
+        } else {
+            // Hiển thị ngày cụ thể
+            const dayData = itinerary[this.currentDay];
+            if (dayData) {
+                html = this.renderDayContent(this.currentDay, dayData);
+            }
+        }
+
+        container.innerHTML = html;
+
+        // Add click events to itinerary locations
+        container.querySelectorAll('.itinerary-location').forEach(item => {
+            item.addEventListener('click', () => {
+                const locationName = item.dataset.location;
+                this.focusOnLocation(locationName);
+            });
+        });
+    }
+
+    renderDayContent(dayKey, dayData) {
+        const dayNumber = dayKey.replace('day', '');
+        const dayColors = {
+            '1': '#e74c3c',
+            '2': '#f39c12',
+            '3': '#27ae60'
+        };
+
+        return `
+            <div class="itinerary-day">
+                <div class="itinerary-header" style="background: linear-gradient(45deg, ${dayColors[dayNumber]}, ${dayColors[dayNumber]}dd);">
+                    <div class="itinerary-title">${dayData.title}</div>
+                    <div class="itinerary-description">${dayData.description}</div>
+                </div>
+                ${dayData.locations.map((location, index) => `
+                    <div class="itinerary-location" data-location="${location.location}">
+                        <div class="itinerary-marker">${index + 1}</div>
+                        <div class="itinerary-time">${location.time}</div>
+                        <div class="itinerary-info">
+                            <div class="itinerary-location-name">${location.location}</div>
+                            <div class="itinerary-note">${location.note}</div>
+                            <div class="itinerary-duration">⏱️ ${location.duration}</div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    showItineraryRoute() {
+        this.clearRoutes();
+        this.markersLayer.clearLayers();
+
+        const dayColors = {
+            'day1': '#e74c3c',
+            'day2': '#f39c12',
+            'day3': '#27ae60'
+        };
+
+        if (this.currentDay === 'all-days') {
+            // Hiển thị tất cả các tuyến đường
+            Object.keys(itinerary).forEach(dayKey => {
+                this.drawDayRoute(dayKey, itinerary[dayKey], dayColors[dayKey]);
+            });
+        } else {
+            // Hiển thị tuyến đường của ngày cụ thể
+            const dayData = itinerary[this.currentDay];
+            if (dayData) {
+                this.drawDayRoute(this.currentDay, dayData, dayColors[this.currentDay]);
+            }
+        }
+    }
+
+    drawDayRoute(dayKey, dayData, color) {
+        const dayNumber = dayKey.replace('day', '');
+        const routeCoordinates = [];
+        
+        dayData.locations.forEach((itineraryLocation, index) => {
+            // Tìm địa điểm trong danh sách locations
+            const location = locations.find(loc => loc.name === itineraryLocation.location);
+            if (location) {
+                routeCoordinates.push([location.coordinates[1], location.coordinates[0]]);
+                
+                // Tạo marker với số thứ tự
+                const customIcon = L.divIcon({
+                    html: `
+                        <div class="custom-marker route-marker ${dayKey}" style="background-color: ${color};">
+                            <span class="marker-number">${index + 1}</span>
+                        </div>
+                    `,
+                    className: 'custom-marker-container',
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 15]
+                });
+
+                const marker = L.marker([location.coordinates[1], location.coordinates[0]], { 
+                    icon: customIcon 
+                }).addTo(this.markersLayer);
+
+                // Popup với thông tin lịch trình
+                marker.bindPopup(`
+                    <div class="popup-content">
+                        <h3>${location.icon} ${location.name}</h3>
+                        <p><strong>Thời gian:</strong> ${itineraryLocation.time}</p>
+                        <p><strong>Thời lượng:</strong> ${itineraryLocation.duration}</p>
+                        <p><strong>Ghi chú:</strong> ${itineraryLocation.note}</p>
+                        <div class="popup-actions">
+                            <button onclick="getDirections(${location.coordinates[0]}, ${location.coordinates[1]}, '${location.name}')">Chỉ đường</button>
+                        </div>
+                    </div>
+                `);
+            }
+        });
+
+        // Vẽ đường nối các điểm
+        if (routeCoordinates.length > 1) {
+            const routeLine = L.polyline(routeCoordinates, {
+                color: color,
+                weight: 4,
+                opacity: 0.8,
+                dashArray: '5, 10',
+                lineJoin: 'round'
+            }).addTo(this.map);
+
+            this.routeLines.push(routeLine);
+        }
+
+        // Fit map to show all route points
+        if (routeCoordinates.length > 0) {
+            const group = new L.featureGroup(this.routeLines);
+            this.map.fitBounds(group.getBounds().pad(0.1));
+        }
+    }
+
+    clearRoutes() {
+        this.routeLines.forEach(line => {
+            this.map.removeLayer(line);
+        });
+        this.routeLines = [];
+    }
+
+    focusOnLocation(locationName) {
+        const location = locations.find(loc => loc.name === locationName);
+        if (location) {
+            this.map.setView([location.coordinates[1], location.coordinates[0]], 16);
+            
+            // Tìm và mở popup của marker tương ứng
+            this.markersLayer.eachLayer(marker => {
+                if (marker.getPopup() && marker.getPopup().getContent().includes(locationName)) {
+                    marker.openPopup();
+                }
+            });
+        }
     }
 }
 
