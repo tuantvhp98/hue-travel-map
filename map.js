@@ -9,15 +9,16 @@ class HueMap {
         this.routeLines = [];
         this.currentDay = 'day1';
         this.currentTab = 'locations';
+        this.currentItinerary = 'classic';
         this.init();
     }
 
     init() {
         this.createMap();
-        this.setupEventListeners();
         this.renderLocationsList();
         this.renderItinerary();
         this.addMarkersToMap();
+        this.setupEventListeners();
     }
 
     createMap() {
@@ -243,6 +244,8 @@ class HueMap {
             });
         });
 
+        // Itinerary day buttons - sẽ được setup trong setupItineraryEventListeners
+        
         // Tab buttons
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -266,19 +269,7 @@ class HueMap {
             });
         });
 
-        // Itinerary day buttons
-        document.querySelectorAll('.itinerary-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                // Remove active class from all buttons
-                document.querySelectorAll('.itinerary-btn').forEach(b => b.classList.remove('active'));
-                // Add active class to clicked button
-                e.target.classList.add('active');
-                
-                this.currentDay = e.target.dataset.day;
-                this.showItineraryRoute();
-                this.renderItineraryContent();
-            });
-        });
+        // Itinerary selector - sẽ được setup trong setupItineraryEventListeners
 
         // Đóng highlight khi click vào bản đồ
         this.map.on('click', (e) => {
@@ -292,23 +283,103 @@ class HueMap {
     }
 
     renderItinerary() {
+        this.updateItineraryDescription();
         this.renderItineraryContent();
+        this.setupItineraryEventListeners();
+    }
+
+    setupItineraryEventListeners() {
+        // Setup itinerary day buttons
+        document.querySelectorAll('.itinerary-btn').forEach(btn => {
+            btn.removeEventListener('click', this.handleItineraryBtnClick);
+            btn.addEventListener('click', this.handleItineraryBtnClick.bind(this));
+        });
+
+        // Setup itinerary selector
+        const itinerarySelect = document.getElementById('itinerary-select');
+        if (itinerarySelect) {
+            itinerarySelect.removeEventListener('change', this.handleItinerarySelectChange);
+            itinerarySelect.addEventListener('change', this.handleItinerarySelectChange.bind(this));
+        }
+    }
+
+    handleItineraryBtnClick(e) {
+        // Remove active class from all buttons
+        document.querySelectorAll('.itinerary-btn').forEach(b => b.classList.remove('active'));
+        // Add active class to clicked button
+        e.target.classList.add('active');
+        
+        this.currentDay = e.target.dataset.day;
+        this.showItineraryRoute();
+        this.updateItineraryContent();
+    }
+
+    handleItinerarySelectChange(e) {
+        this.currentItinerary = e.target.value;
+        this.updateItineraryDescription();
+        this.updateItineraryContent();
+        if (this.currentTab === 'itinerary') {
+            this.showItineraryRoute();
+        }
+    }
+
+    updateItineraryContent() {
+        const container = document.getElementById('itinerary-content');
+        if (!container) return;
+
+        const currentItinerary = itineraries[this.currentItinerary];
+        if (!currentItinerary) return;
+
+        let html = '';
+
+        if (this.currentDay === 'all-days') {
+            // Hiển thị tất cả các ngày
+            Object.keys(currentItinerary.itinerary).forEach(dayKey => {
+                html += this.renderDayContent(dayKey, currentItinerary.itinerary[dayKey]);
+            });
+        } else {
+            // Hiển thị ngày cụ thể
+            const dayData = currentItinerary.itinerary[this.currentDay];
+            if (dayData) {
+                html = this.renderDayContent(this.currentDay, dayData);
+            }
+        }
+
+        container.innerHTML = html;
+
+        // Add click events to itinerary locations
+        container.querySelectorAll('.itinerary-location').forEach(item => {
+            item.addEventListener('click', () => {
+                const locationName = item.dataset.location;
+                this.focusOnLocation(locationName);
+            });
+        });
+    }
+
+    updateItineraryDescription() {
+        const descContainer = document.getElementById('itinerary-description');
+        if (descContainer && itineraries[this.currentItinerary]) {
+            descContainer.textContent = itineraries[this.currentItinerary].description;
+        }
     }
 
     renderItineraryContent() {
         const container = document.getElementById('itinerary-content');
         if (!container) return;
 
+        const currentItinerary = itineraries[this.currentItinerary];
+        if (!currentItinerary) return;
+
         let html = '';
 
         if (this.currentDay === 'all-days') {
             // Hiển thị tất cả các ngày
-            Object.keys(itinerary).forEach(dayKey => {
-                html += this.renderDayContent(dayKey, itinerary[dayKey]);
+            Object.keys(currentItinerary.itinerary).forEach(dayKey => {
+                html += this.renderDayContent(dayKey, currentItinerary.itinerary[dayKey]);
             });
         } else {
             // Hiển thị ngày cụ thể
-            const dayData = itinerary[this.currentDay];
+            const dayData = currentItinerary.itinerary[this.currentDay];
             if (dayData) {
                 html = this.renderDayContent(this.currentDay, dayData);
             }
@@ -339,17 +410,48 @@ class HueMap {
                     <div class="itinerary-title">${dayData.title}</div>
                     <div class="itinerary-description">${dayData.description}</div>
                 </div>
-                ${dayData.locations.map((location, index) => `
-                    <div class="itinerary-location" data-location="${location.location}">
-                        <div class="itinerary-marker">${index + 1}</div>
-                        <div class="itinerary-time">${location.time}</div>
-                        <div class="itinerary-info">
-                            <div class="itinerary-location-name">${location.location}</div>
-                            <div class="itinerary-note">${location.note}</div>
-                            <div class="itinerary-duration">⏱️ ${location.duration}</div>
+                ${dayData.locations.map((location, index) => {
+                    let distanceInfo = '';
+                    
+                    // Tính khoảng cách đến địa điểm tiếp theo
+                    if (index < dayData.locations.length - 1) {
+                        const currentLocation = locations.find(loc => loc.name === location.location);
+                        const nextLocation = locations.find(loc => loc.name === dayData.locations[index + 1].location);
+                        
+                        if (currentLocation && nextLocation) {
+                            const distance = this.calculateDistance(
+                                currentLocation.coordinates[1], currentLocation.coordinates[0],
+                                nextLocation.coordinates[1], nextLocation.coordinates[0]
+                            );
+                            const travelTime = this.estimateTravelTime(distance);
+                            distanceInfo = `
+                                <div class="distance-info">
+                                    <span class="distance">📍 ${this.formatDistance(distance)}</span>
+                                    <span class="travel-time">🚗 ${travelTime}</span>
+                                </div>
+                            `;
+                        }
+                    }
+                    
+                    return `
+                        <div class="itinerary-location" data-location="${location.location}">
+                            <div class="itinerary-marker">${index + 1}</div>
+                            <div class="itinerary-time">${location.time}</div>
+                            <div class="itinerary-info">
+                                <div class="itinerary-location-name">${location.location}</div>
+                                <div class="itinerary-note">${location.note}</div>
+                                <div class="itinerary-duration">⏱️ ${location.duration}</div>
+                                ${distanceInfo}
+                            </div>
                         </div>
-                    </div>
-                `).join('')}
+                        ${index < dayData.locations.length - 1 && distanceInfo ? `
+                            <div class="travel-indicator">
+                                <div class="travel-line"></div>
+                                <div class="travel-arrow">⬇️</div>
+                            </div>
+                        ` : ''}
+                    `;
+                }).join('')}
             </div>
         `;
     }
@@ -357,6 +459,9 @@ class HueMap {
     showItineraryRoute() {
         this.clearRoutes();
         this.markersLayer.clearLayers();
+
+        const currentItinerary = itineraries[this.currentItinerary];
+        if (!currentItinerary) return;
 
         const dayColors = {
             'day1': '#e74c3c',
@@ -366,12 +471,12 @@ class HueMap {
 
         if (this.currentDay === 'all-days') {
             // Hiển thị tất cả các tuyến đường
-            Object.keys(itinerary).forEach(dayKey => {
-                this.drawDayRoute(dayKey, itinerary[dayKey], dayColors[dayKey]);
+            Object.keys(currentItinerary.itinerary).forEach(dayKey => {
+                this.drawDayRoute(dayKey, currentItinerary.itinerary[dayKey], dayColors[dayKey]);
             });
         } else {
             // Hiển thị tuyến đường của ngày cụ thể
-            const dayData = itinerary[this.currentDay];
+            const dayData = currentItinerary.itinerary[this.currentDay];
             if (dayData) {
                 this.drawDayRoute(this.currentDay, dayData, dayColors[this.currentDay]);
             }
@@ -457,6 +562,43 @@ class HueMap {
                     marker.openPopup();
                 }
             });
+        }
+    }
+
+    // Hàm tính khoảng cách giữa 2 điểm (Haversine formula)
+    calculateDistance(lat1, lng1, lat2, lng2) {
+        const R = 6371; // Bán kính Trái Đất (km)
+        const dLat = this.toRadians(lat2 - lat1);
+        const dLng = this.toRadians(lng2 - lng1);
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(this.toRadians(lat1)) * Math.cos(this.toRadians(lat2)) *
+                Math.sin(dLng/2) * Math.sin(dLng/2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return R * c;
+    }
+
+    toRadians(degrees) {
+        return degrees * (Math.PI / 180);
+    }
+
+    formatDistance(distance) {
+        if (distance < 1) {
+            return Math.round(distance * 1000) + 'm';
+        } else {
+            return distance.toFixed(1) + 'km';
+        }
+    }
+
+    estimateTravelTime(distance) {
+        // Giả sử tốc độ trung bình 25km/h (bao gồm xe máy, ôtô trong thành phố)
+        const avgSpeed = 25;
+        const timeInHours = distance / avgSpeed;
+        const timeInMinutes = Math.round(timeInHours * 60);
+        
+        if (timeInMinutes < 5) {
+            return "< 5 phút";
+        } else {
+            return timeInMinutes + " phút";
         }
     }
 }

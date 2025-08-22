@@ -290,138 +290,552 @@ const locationTypes = {
     attraction: "Điểm tham quan"
 };
 
-// Lịch trình 3 ngày 2 đêm tại Huế
-const itinerary = {
-    day1: {
-        title: "Ngày 1: Đại Nội – Chùa Thiên Mụ – Sông Hương",
-        description: "Khám phá trung tâm di sản văn hóa thế giới và thưởng thức ẩm thực địa phương",
-        locations: [
-            {
-                time: "08:00",
-                location: "Bún Bò Huế Hồng Mai",
-                duration: "30 phút",
-                note: "Ăn sáng bún bò Huế authentic trước khi tham quan"
+// Danh sách các lịch trình khác nhau
+const itineraries = {
+    classic: {
+        name: "Lịch trình Classic - Truyền thống",
+        description: "Khám phá Huế theo lối truyền thống với các di tích lịch sử và ẩm thực đặc sắc",
+        itinerary: {
+            day1: {
+                title: "Ngày 1: Đại Nội – Chùa Thiên Mụ – Sông Hương",
+                description: "Khám phá trung tâm di sản văn hóa thế giới và thưởng thức ẩm thực địa phương",
+                locations: [
+                    {
+                        time: "08:00",
+                        location: "Bún Bò Huế Hồng Mai",
+                        duration: "30 phút",
+                        note: "Ăn sáng bún bò Huế authentic trước khi tham quan"
+                    },
+                    {
+                        time: "08:30",
+                        location: "Hoàng Thành Huế",
+                        duration: "3 giờ",
+                        note: "Tham quan Đại Nội (Kinh thành Huế) - khu rộng lớn, chụp ảnh tốn ~3h"
+                    },
+                    {
+                        time: "11:30",
+                        location: "Cơm Hến Đập Đá 01 Hàn Mặc Tử",
+                        duration: "1 giờ",
+                        note: "Ăn trưa cơm hến đặc sản Huế"
+                    },
+                    {
+                        time: "15:00",
+                        location: "Chùa Thiên Mụ",
+                        duration: "2 giờ",
+                        note: "Tham quan chùa cổ, ngắm cảnh và chụp ảnh hoàng hôn siêu đẹp"
+                    },
+                    {
+                        time: "17:00",
+                        location: "Cầu Trường Tiền",
+                        duration: "1 giờ",
+                        note: "Dạo sông Hương và cầu Trường Tiền, ngắm cảnh hoàng hôn"
+                    },
+                    {
+                        time: "19:00",
+                        location: "Bún Thịt Nướng Huế",
+                        duration: "1 giờ",
+                        note: "Ăn tối bún thịt nướng đặc sản"
+                    },
+                    {
+                        time: "20:00",
+                        location: "Bánh Bèo Bánh Nậm Cô Ba",
+                        duration: "45 phút",
+                        note: "Thưởng thức bánh bèo, bánh nậm và dạo phố Tây"
+                    }
+                ]
             },
-            {
-                time: "08:30",
-                location: "Hoàng Thành Huế",
-                duration: "3 giờ",
-                note: "Tham quan Đại Nội (Kinh thành Huế) - khu rộng lớn, chụp ảnh tốn ~3h"
+            day2: {
+                title: "Ngày 2: Lăng tẩm – Cung An Định – Đồi Vọng Cảnh",
+                description: "Khám phá kiến trúc hoàng gia và ngắm cảnh sông Hương từ trên cao",
+                locations: [
+                    {
+                        time: "07:30",
+                        location: "Bánh Canh Cá Lóc Sen Xù",
+                        duration: "45 phút",
+                        note: "Ăn sáng bánh canh Huế"
+                    },
+                    {
+                        time: "08:00",
+                        location: "Lăng Khải Định",
+                        duration: "3 giờ",
+                        note: "Tham quan lăng có kiến trúc độc đáo Đông Tây kết hợp, chụp ảnh đẹp"
+                    },
+                    {
+                        time: "13:30",
+                        location: "Đồi Vọng Cảnh",
+                        duration: "2 giờ",
+                        note: "Ngắm sông Hương từ trên cao, view panorama tuyệt đẹp"
+                    },
+                    {
+                        time: "16:00",
+                        location: "Cung An Định",
+                        duration: "1.5 giờ",
+                        note: "Tham quan cung điện nhà Nguyễn, kiến trúc cổ điển"
+                    },
+                    {
+                        time: "19:00",
+                        location: "Chè Thanh 4.7 sao",
+                        duration: "1 giờ",
+                        note: "Ăn tối và trải nghiệm chè Huế đặc sắc"
+                    },
+                    {
+                        time: "20:30",
+                        location: "Cầu Trường Tiền",
+                        duration: "1 giờ",
+                        note: "Tự do dạo phố, ngắm cầu Trường Tiền về đêm lên đèn rất chill"
+                    }
+                ]
             },
-            {
-                time: "11:30",
-                location: "Cơm Hến Đập Đá 01 Hàn Mặc Tử",
-                duration: "1 giờ",
-                note: "Ăn trưa cơm hến đặc sản Huế"
-            },
-            {
-                time: "15:00",
-                location: "Chùa Thiên Mụ",
-                duration: "2 giờ",
-                note: "Tham quan chùa cổ, ngắm cảnh và chụp ảnh hoàng hôn siêu đẹp"
-            },
-            {
-                time: "17:00",
-                location: "Cầu Trường Tiền",
-                duration: "1 giờ",
-                note: "Dạo sông Hương và cầu Trường Tiền, ngắm cảnh hoàng hôn"
-            },
-            {
-                time: "19:00",
-                location: "Bún Thịt Nướng Huế",
-                duration: "1 giờ",
-                note: "Ăn tối bún thịt nướng đặc sản"
-            },
-            {
-                time: "20:00",
-                location: "Bánh Bèo Bánh Nậm Cô Ba",
-                duration: "45 phút",
-                note: "Thưởng thức bánh bèo, bánh nậm và dạo phố Tây"
+            day3: {
+                title: "Ngày 3: Thơ mộng xứ Huế – Bến Xưa – Trường Quốc Học",
+                description: "Khám phá những nét đẹp thơ mộng, văn hóa và lịch sử giáo dục Huế",
+                locations: [
+                    {
+                        time: "07:00",
+                        location: "Cơm Hến Đập Đá 01 Hàn Mặc Tử",
+                        duration: "45 phút",
+                        note: "Ăn sáng cơm hến lần cuối"
+                    },
+                    {
+                        time: "08:00",
+                        location: "Bến Xưa Vĩ Dạ",
+                        duration: "2 giờ",
+                        note: "Tham quan bến xưa gắn với thơ Hàn Mặc Tử, không gian thơ mộng"
+                    },
+                    {
+                        time: "10:30",
+                        location: "Trường Quốc Học Huế",
+                        duration: "1.5 giờ",
+                        note: "Thăm trường cổ kính, nhiều góc chụp hình đẹp"
+                    },
+                    {
+                        time: "14:00",
+                        location: "Cầu Gỗ Lim",
+                        duration: "1.5 giờ",
+                        note: "Check-in cầu gỗ lim cổ kính, trải nghiệm làng quê"
+                    },
+                    {
+                        time: "15:30",
+                        location: "Trường Quốc Học Huế",
+                        duration: "1.5 giờ",
+                        note: "Quay lại khu trường, gần đó có bãi cỏ hồng chụp hoàng hôn rất đẹp"
+                    },
+                    {
+                        time: "17:30",
+                        location: "Chè mợ tôn đích",
+                        duration: "1 giờ",
+                        note: "Ăn uống nhẹ, thưởng thức chè truyền thống trước khi kết thúc hành trình"
+                    }
+                ]
             }
-        ]
+        }
     },
-    day2: {
-        title: "Ngày 2: Lăng tẩm – Cung An Định – Đồi Vọng Cảnh",
-        description: "Khám phá kiến trúc hoàng gia và ngắm cảnh sông Hương từ trên cao",
-        locations: [
-            {
-                time: "07:30",
-                location: "Bánh Canh Cá Lóc Sen Xù",
-                duration: "45 phút",
-                note: "Ăn sáng bánh canh Huế"
+    foodie: {
+        name: "Lịch trình Food Tour - Sành ăn",
+        description: "Hành trình khám phá ẩm thực Huế từ A-Z với những món đặc sản nổi tiếng",
+        itinerary: {
+            day1: {
+                title: "Ngày 1: Ẩm thực phố cổ",
+                description: "Thưởng thức các món ăn đường phố và ẩm thực hoàng gia",
+                locations: [
+                    {
+                        time: "07:00",
+                        location: "Bún Bò Huế Hồng Mai",
+                        duration: "45 phút",
+                        note: "Bún bò Huế đúng chuẩn - khởi đầu ngày mới"
+                    },
+                    {
+                        time: "08:30",
+                        location: "Hoàng Thành Huế",
+                        duration: "2 giờ",
+                        note: "Tìm hiểu văn hóa ẩm thực cung đình qua tham quan Đại Nội"
+                    },
+                    {
+                        time: "11:00",
+                        location: "Bánh Ép Cây Xoài (gốc)",
+                        duration: "45 phút",
+                        note: "Bánh ép Huế gốc - món ăn vặt nổi tiếng"
+                    },
+                    {
+                        time: "12:30",
+                        location: "Cơm Hến Đập Đá 01 Hàn Mặc Tử",
+                        duration: "1 giờ",
+                        note: "Cơm hến - linh hồn ẩm thực bình dân Huế"
+                    },
+                    {
+                        time: "15:00",
+                        location: "Chè bột lọc heo quay tại chè hẻm",
+                        duration: "45 phút",
+                        note: "Chè đậu xanh và bánh bột lọc truyền thống"
+                    },
+                    {
+                        time: "17:00",
+                        location: "Nem Lụi Bà Tý",
+                        duration: "1 giờ",
+                        note: "Nem lụi nướng than hoa - đặc sản Huế"
+                    },
+                    {
+                        time: "19:30",
+                        location: "Bánh Bèo Bánh Nậm Cô Ba",
+                        duration: "1.5 giờ",
+                        note: "Set bánh Huế đầy đủ: bánh bèo, bánh nậm, bánh lọc"
+                    }
+                ]
             },
-            {
-                time: "08:00",
-                location: "Lăng Khải Định",
-                duration: "3 giờ",
-                note: "Tham quan lăng có kiến trúc độc đáo Đông Tây kết hợp, chụp ảnh đẹp"
+            day2: {
+                title: "Ngày 2: Ẩm thực làng quê",
+                description: "Khám phá hương vị quê nhà và các món ăn truyền thống",
+                locations: [
+                    {
+                        time: "07:00",
+                        location: "Bánh Canh Cá Lóc Sen Xù",
+                        duration: "45 phút",
+                        note: "Bánh canh cá lóc - hương vị sông nước"
+                    },
+                    {
+                        time: "09:00",
+                        location: "Cầu Gỗ Lim",
+                        duration: "1.5 giờ",
+                        note: "Trải nghiệm làng quê, tìm hiểu cách làm bánh tráng"
+                    },
+                    {
+                        time: "11:30",
+                        location: "Bánh Ướt - Bún Thịt Nướng Huyền Anh",
+                        duration: "1 giờ",
+                        note: "Bánh ướt và bún thịt nướng - combo hoàn hảo"
+                    },
+                    {
+                        time: "14:00",
+                        location: "Làng hương Thủy Xuân - Cô Hoa",
+                        duration: "2 giờ",
+                        note: "Trải nghiệm làm hương và thưởng thức chè làng"
+                    },
+                    {
+                        time: "17:00",
+                        location: "Vịt lộn um bầu bé Đen",
+                        duration: "1 giờ",
+                        note: "Vịt lộn um bầu - món ăn bổ dưỡng"
+                    },
+                    {
+                        time: "19:00",
+                        location: "Bún Bò Bà Nga",
+                        duration: "1 giờ",
+                        note: "Bún bò Huế phiên bản đậm đà"
+                    }
+                ]
             },
-            {
-                time: "13:30",
-                location: "Đồi Vọng Cảnh",
-                duration: "2 giờ",
-                note: "Ngắm sông Hương từ trên cao, view panorama tuyệt đẹp"
-            },
-            {
-                time: "16:00",
-                location: "Cung An Định",
-                duration: "1.5 giờ",
-                note: "Tham quan cung điện nhà Nguyễn, kiến trúc cổ điển"
-            },
-            {
-                time: "19:00",
-                location: "Chè Thanh 4.7 sao",
-                duration: "1 giờ",
-                note: "Ăn tối và trải nghiệm chè Huế đặc sắc"
-            },
-            {
-                time: "20:30",
-                location: "Cầu Trường Tiền",
-                duration: "1 giờ",
-                note: "Tự do dạo phố, ngắm cầu Trường Tiền về đêm lên đèn rất chill"
+            day3: {
+                title: "Ngày 3: Cà phê và chè xứ Huế",
+                description: "Khám phá văn hóa cà phê và chè đặc trưng của Huế",
+                locations: [
+                    {
+                        time: "08:00",
+                        location: "Cà Phê Muối cs1",
+                        duration: "1 giờ",
+                        note: "Cà phê muối - sáng tạo độc đáo của Huế"
+                    },
+                    {
+                        time: "10:00",
+                        location: "Bánh Mì Trường Tiền O Tho",
+                        duration: "30 phút",
+                        note: "Bánh mì Huế với pate đặc biệt"
+                    },
+                    {
+                        time: "11:30",
+                        location: "Cafe Hạt Đậu Nhỏ",
+                        duration: "1.5 giờ",
+                        note: "Cà phê sạch trong không gian yên tĩnh"
+                    },
+                    {
+                        time: "14:00",
+                        location: "Chè mợ tôn đích",
+                        duration: "45 phút",
+                        note: "Chè cung đình - tinh hoa ẩm thực hoàng gia"
+                    },
+                    {
+                        time: "16:00",
+                        location: "Chè Thanh 4.7 sao",
+                        duration: "1 giờ",
+                        note: "Chè đậu xanh nổi tiếng nhất Huế"
+                    },
+                    {
+                        time: "18:00",
+                        location: "Nhà hàng 52 Bao Vinh",
+                        duration: "1.5 giờ",
+                        note: "Bữa tối cuối với đặc sản tổng hợp"
+                    }
+                ]
             }
-        ]
+        }
     },
-    day3: {
-        title: "Ngày 3: Thơ mộng xứ Huế – Bến Xưa – Trường Quốc Học",
-        description: "Khám phá những nét đẹp thơ mộng, văn hóa và lịch sử giáo dục Huế",
-        locations: [
-            {
-                time: "07:00",
-                location: "Cơm Hến Đập Đá 01 Hàn Mặc Tử",
-                duration: "45 phút",
-                note: "Ăn sáng cơm hến lần cuối"
+    nature: {
+        name: "Lịch trình Nature - Thiên nhiên",
+        description: "Khám phá vẻ đẹp thiên nhiên và cảnh quan thơ mộng xứ Huế",
+        itinerary: {
+            day1: {
+                title: "Ngày 1: Sông Hương thơ mộng",
+                description: "Khám phá dòng sông Hương và các cảnh quan ven sông",
+                locations: [
+                    {
+                        time: "06:30",
+                        location: "Bến Xưa Vĩ Dạ",
+                        duration: "2 giờ",
+                        note: "Ngắm bình minh trên sông Hương, không gian thơ mộng"
+                    },
+                    {
+                        time: "09:00",
+                        location: "Bún Bò Huế Hồng Mai",
+                        duration: "45 phút",
+                        note: "Ăn sáng bún bò Huế"
+                    },
+                    {
+                        time: "10:30",
+                        location: "Chùa Thiên Mụ",
+                        duration: "2 giờ",
+                        note: "Thăm chùa cổ bên bờ sông Hương"
+                    },
+                    {
+                        time: "13:00",
+                        location: "Cơm Hến Đập Đá 01 Hàn Mặc Tử",
+                        duration: "1 giờ",
+                        note: "Ăn trưa cơm hến"
+                    },
+                    {
+                        time: "15:00",
+                        location: "Cầu Trường Tiền",
+                        duration: "2 giờ",
+                        note: "Dạo cầu, ngắm cảnh sông Hương từ trên cao"
+                    },
+                    {
+                        time: "18:00",
+                        location: "Đường đi bộ Nguyễn Đình Chiểu",
+                        duration: "2 giờ",
+                        note: "Tản bộ ven sông, thưởng thức không khí trong lành"
+                    }
+                ]
             },
-            {
-                time: "08:00",
-                location: "Bến Xưa Vĩ Dạ",
-                duration: "2 giờ",
-                note: "Tham quan bến xưa gắn với thơ Hàn Mặc Tử, không gian thơ mộng"
+            day2: {
+                title: "Ngày 2: Núi đồi và làng quê",
+                description: "Khám phá thiên nhiên núi đồi và trải nghiệm làng quê",
+                locations: [
+                    {
+                        time: "07:00",
+                        location: "Bánh Canh Cá Lóc Sen Xù",
+                        duration: "45 phút",
+                        note: "Ăn sáng bánh canh"
+                    },
+                    {
+                        time: "08:30",
+                        location: "Đồi Thiên An",
+                        duration: "3 giờ",
+                        note: "Trekking, ngắm cảnh từ trên cao, chụp ảnh thiên nhiên"
+                    },
+                    {
+                        time: "12:30",
+                        location: "Cafe Hạt Đậu Nhỏ",
+                        duration: "1.5 giờ",
+                        note: "Nghỉ ngơi, thưởng thức cà phê trong không gian xanh"
+                    },
+                    {
+                        time: "15:00",
+                        location: "Đồi Vọng Cảnh",
+                        duration: "2 giờ",
+                        note: "Ngắm toàn cảnh sông Hương từ đồi Vọng Cảnh"
+                    },
+                    {
+                        time: "17:30",
+                        location: "Cầu Gỗ Lim",
+                        duration: "2 giờ",
+                        note: "Trải nghiệm cầu gỗ cổ và làng quê Thanh Toàn"
+                    },
+                    {
+                        time: "20:00",
+                        location: "Bún Thịt Nướng Huế",
+                        duration: "1 giờ",
+                        note: "Ăn tối bún thịt nướng"
+                    }
+                ]
             },
-            {
-                time: "10:30",
-                location: "Trường Quốc Học Huế",
-                duration: "1.5 giờ",
-                note: "Thăm trường cổ kính, nhiều góc chụp hình đẹp"
-            },
-            {
-                time: "14:00",
-                location: "Cầu Gỗ Lim",
-                duration: "1.5 giờ",
-                note: "Check-in cầu gỗ lim cổ kính, trải nghiệm làng quê"
-            },
-            {
-                time: "15:30",
-                location: "Trường Quốc Học Huế",
-                duration: "1.5 giờ",
-                note: "Quay lại khu trường, gần đó có bãi cỏ hồng chụp hoàng hôn rất đẹp"
-            },
-            {
-                time: "17:30",
-                location: "Chè mợ tôn đích",
-                duration: "1 giờ",
-                note: "Ăn uống nhẹ, thưởng thức chè truyền thống trước khi kết thúc hành trình"
+            day3: {
+                title: "Ngày 3: Lăng tẩm trong thiên nhiên",
+                description: "Tham quan các lăng tẩm hoàng gia trong khung cảnh thiên nhiên",
+                locations: [
+                    {
+                        time: "07:30",
+                        location: "Bánh Ép Cây Xoài (gốc)",
+                        duration: "45 phút",
+                        note: "Ăn sáng bánh ép"
+                    },
+                    {
+                        time: "09:00",
+                        location: "Lăng Tự Đức",
+                        duration: "2.5 giờ",
+                        note: "Tham quan lăng tẩm lãng mạn nhất trong rừng thông"
+                    },
+                    {
+                        time: "12:30",
+                        location: "Nem Lụi Bà Tý",
+                        duration: "1 giờ",
+                        note: "Ăn trưa nem lụi"
+                    },
+                    {
+                        time: "14:30",
+                        location: "Lăng Minh Mạng",
+                        duration: "2 giờ",
+                        note: "Khám phá lăng tẩm giữa thiên nhiên hùng vĩ"
+                    },
+                    {
+                        time: "17:00",
+                        location: "Lăng Khải Định",
+                        duration: "1.5 giờ",
+                        note: "Tham quan lăng tẩm độc đáo trên núi Châu Chữ"
+                    },
+                    {
+                        time: "19:00",
+                        location: "Chè Thanh 4.7 sao",
+                        duration: "1 giờ",
+                        note: "Kết thúc hành trình với chè đậu xanh"
+                    }
+                ]
             }
-        ]
+        }
+    },
+    budget: {
+        name: "Lịch trình Budget - Tiết kiệm",
+        description: "Du lịch Huế tiết kiệm với các địa điểm miễn phí và ẩm thực bình dân",
+        itinerary: {
+            day1: {
+                title: "Ngày 1: Khám phá miễn phí",
+                description: "Tham quan các địa điểm miễn phí và ăn uống bình dân",
+                locations: [
+                    {
+                        time: "07:00",
+                        location: "Bún Bò Huế Hồng Mai",
+                        duration: "30 phút",
+                        note: "Bún bò bình dân giá rẻ (~25k)"
+                    },
+                    {
+                        time: "08:00",
+                        location: "Cầu Trường Tiền",
+                        duration: "1 giờ",
+                        note: "Dạo cầu miễn phí, chụp ảnh sông Hương"
+                    },
+                    {
+                        time: "09:30",
+                        location: "Trường Quốc Học Huế",
+                        duration: "1.5 giờ",
+                        note: "Tham quan trường lịch sử (miễn phí)"
+                    },
+                    {
+                        time: "11:30",
+                        location: "Cơm Hến Đập Đá 01 Hàn Mặc Tử",
+                        duration: "1 giờ",
+                        note: "Cơm hến bình dân (~20k)"
+                    },
+                    {
+                        time: "14:00",
+                        location: "Đường đi bộ Nguyễn Đình Chiểu",
+                        duration: "2 giờ",
+                        note: "Dạo phố miễn phí, ngắm kiến trúc cổ"
+                    },
+                    {
+                        time: "17:00",
+                        location: "Bến Xưa Vĩ Dạ",
+                        duration: "1.5 giờ",
+                        note: "Ngắm hoàng hôn miễn phí"
+                    },
+                    {
+                        time: "19:00",
+                        location: "Bánh Ép Cây Xoài (gốc)",
+                        duration: "1 giờ",
+                        note: "Bánh ép giá rẻ (~15k)"
+                    }
+                ]
+            },
+            day2: {
+                title: "Ngày 2: Lăng tẩm và chợ",
+                description: "Tham quan lăng tẩm giá rẻ và khám phá chợ địa phương",
+                locations: [
+                    {
+                        time: "07:00",
+                        location: "Bánh Canh Cá Lóc Sen Xù",
+                        duration: "45 phút",
+                        note: "Bánh canh bình dân (~25k)"
+                    },
+                    {
+                        time: "08:30",
+                        location: "Tư Lăng - Lăng mộ vua Đồng Khánh",
+                        duration: "2 giờ",
+                        note: "Lăng tẩm vé rẻ nhất (~30k)"
+                    },
+                    {
+                        time: "11:30",
+                        location: "Bánh Ướt - Bún Thịt Nướng Huyền Anh",
+                        duration: "1 giờ",
+                        note: "Bánh ướt giá rẻ (~20k)"
+                    },
+                    {
+                        time: "14:00",
+                        location: "Cầu Gỗ Lim",
+                        duration: "2 giờ",
+                        note: "Tham quan làng cổ, vé rẻ (~20k)"
+                    },
+                    {
+                        time: "17:00",
+                        location: "Chè bột lọc heo quay tại chè hẻm",
+                        duration: "1 giờ",
+                        note: "Chè bình dân (~15k)"
+                    },
+                    {
+                        time: "19:00",
+                        location: "Vịt lộn um bầu bé Đen",
+                        duration: "1 giờ",
+                        note: "Vịt lộn giá hợp lý (~30k)"
+                    }
+                ]
+            },
+            day3: {
+                title: "Ngày 3: Cà phê và mua sắm",
+                description: "Thưởng thức cà phê bình dân và mua quà giá rẻ",
+                locations: [
+                    {
+                        time: "08:00",
+                        location: "Cafe Hạt Đậu Nhỏ",
+                        duration: "1 giờ",
+                        note: "Cà phê địa phương giá tốt (~20k)"
+                    },
+                    {
+                        time: "10:00",
+                        location: "Hoàng Thành Huế",
+                        duration: "2 giờ",
+                        note: "Vé học sinh/sinh viên giảm 50%"
+                    },
+                    {
+                        time: "13:00",
+                        location: "Bánh Mì Trường Tiền O Tho",
+                        duration: "30 phút",
+                        note: "Bánh mì giá rẻ (~15k)"
+                    },
+                    {
+                        time: "14:30",
+                        location: "Chùa Thiên Mụ",
+                        duration: "1.5 giờ",
+                        note: "Tham quan chùa miễn phí"
+                    },
+                    {
+                        time: "16:30",
+                        location: "Chè mợ tôn đích",
+                        duration: "45 phút",
+                        note: "Chè giá bình dân (~20k)"
+                    },
+                    {
+                        time: "18:00",
+                        location: "Nem Lụi Bà Tý",
+                        duration: "1 giờ",
+                        note: "Nem lụi cuối chuyến (~35k)"
+                    }
+                ]
+            }
+        }
     }
 };

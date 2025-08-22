@@ -539,6 +539,52 @@ body {
     display: block;
 }
 
+/* Itinerary selector styles */
+.itinerary-selector {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    border: 2px solid #ecf0f1;
+}
+
+.itinerary-selector label {
+    display: block;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.itinerary-selector select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #bdc3c7;
+    border-radius: 6px;
+    background: white;
+    font-size: 0.95em;
+    color: #2c3e50;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.itinerary-selector select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.itinerary-description {
+    margin-bottom: 20px;
+    padding: 12px 15px;
+    background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+    border-left: 4px solid #3498db;
+    border-radius: 6px;
+    font-size: 0.9em;
+    color: #495057;
+    line-height: 1.4;
+}
+
 /* Itinerary styles */
 .itinerary-buttons {
     display: flex;
@@ -709,6 +755,60 @@ body {
     background: #27ae60;
     border-color: #27ae60;
     color: white;
+}
+
+.itinerary-marker.visited {
+    background: #27ae60;
+    border-color: #27ae60;
+    color: white;
+}
+
+/* Distance and travel info styles */
+.distance-info {
+    margin-top: 8px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.distance {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: 600;
+}
+
+.travel-time {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: 600;
+}
+
+/* Travel indicator between locations */
+.travel-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    margin: 0 20px;
+}
+
+.travel-line {
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(to bottom, #bdc3c7, #95a5a6);
+    border-radius: 1px;
+}
+
+.travel-arrow {
+    margin-top: 5px;
+    font-size: 0.8em;
+    opacity: 0.7;
 }
 
 /* Marker number styles */
